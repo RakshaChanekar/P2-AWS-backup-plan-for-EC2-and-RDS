@@ -1,161 +1,121 @@
-📌 AWS Backup Setup for EC2 and RDS
-📖 Project Overview
+📦 AWS Backup Setup for EC2 and RDS
+📌 Project Title
 
-This project demonstrates how to configure a centralized backup system using AWS Backup to protect cloud resources from data loss.
+Centralized Backup Strategy using AWS Backup for EC2 and RDS
 
-The setup includes:
+📖 Introduction
 
-Amazon EC2 instance (with Apache web server)
-Amazon RDS instance (MySQL database)
+In this project, a backup system was implemented using Amazon Web Services to protect cloud resources from data loss.
 
-The goal is to ensure data recovery and fault tolerance in case of system failure.
+The solution uses AWS Backup, a centralized service that automates and manages backups across AWS resources.
 
-⚠️ Problem Statement
+The main objective of this project is:
 
-A system failure previously caused data loss due to missing backup policies.
-To solve this, a centralized AWS Backup strategy is implemented.
+To create a secure backup vault
+To configure a backup plan
+To protect resources like:
+Amazon EC2 (Virtual Server)
+Amazon RDS (Database)
 
-🏗️ Architecture Diagram
-EC2 Instance Running
-        │
-        │
-RDS Database Running
-        │
-        │
-AWS Backup Plan
-        │
-        │
-Backup Jobs Executed
-        │
-        │
-Recovery Points Stored in Backup Vault
-🔄 System Flow
-User
- │
- │
- AWS Console
- │
- ├── EC2 Instance
- │      └── Apache Web Server + Sample Data
- │
- ├── RDS MySQL Database
- │      └── Test Table + Data
- │
- └── AWS Backup
-        │
-        ├── Backup Plan
-        ├── Backup Vault
-        └── Recovery Points
-🚀 Implementation Steps
-🔹 1. Infrastructure Setup
-✅ EC2 Instance Setup
+This ensures data recovery in case of system failure or accidental deletion.
 
-Service: Amazon EC2
+🏗️ Architecture Diagram (Flow)
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/1e8a0e19-aaf7-48c6-b16a-d113c9967b99" />
 
-Steps:
 
-Launch EC2 instance (Ubuntu / Amazon Linux 2)
-Configure Security Group (SG)
-Connect using SSH
-Install Apache
-sudo apt update
-sudo apt install apache2 -y
-Create sample data
-echo "AWS Backup Demo Project" > /var/www/html/index.html
-✅ RDS Setup
+⚙️ Step-by-Step Implementation
+1️⃣ Create Security Group
+Navigate to EC2 Dashboard
+Go to Security Groups
+Click Create Security Group
+Add rules:
+HTTP (Port 80)
+SSH (Port 22)
+Save the Security Group
 
-Service: Amazon RDS
+2️⃣ Launch EC2 Instance
+Go to EC2 Dashboard
+Click Launch Instance
+Configure:
+AMI: Amazon Linux
+Instance Type: t2.micro
+Attach created Security Group
+Install Apache:
+sudo yum update -y
+sudo yum install httpd -y
+sudo systemctl start httpd
 
-Steps:
+3️⃣ Create RDS Database
+Go to RDS Dashboard
+Click Create Database
+Select:
+Engine: MySQL
+Instance Type: Free tier
+Configure DB name and credentials
+Launch database
 
-Create MySQL database
-Configure DB access
-Add sample data
-CREATE DATABASE testdb;
-USE testdb;
-
-CREATE TABLE users (
-    id INT PRIMARY KEY,
-    name VARCHAR(50)
-);
-
-INSERT INTO users VALUES (1, 'Test User');
-🔹 2. AWS Backup Setup
-✅ Step 1: Create Backup Vault
+4️⃣ Create Backup Vault
 Go to AWS Backup
 Click Backup Vaults → Create Vault
 Name: project-backup-vault
-✅ Step 2: Create Backup Plan
-Go to Backup Plans → Create Plan
+Use default encryption
+
+✅ Backup Vault created successfully
+
+5️⃣ Create Backup Plan
+Navigate to Backup Plans
+Click Create Backup Plan
+Choose Build a new plan
 Name: project-backup-plan
 
-Configuration:
+Configure:
+Backup Frequency: Daily
+Retention: 7 Days
+Destination Vault: project-backup-vault
 
-Frequency: Daily
-Retention: 7 days
-Vault: project-backup-vault
-✅ Step 3: Assign Resources
-Open backup plan
+6️⃣ Assign Resources
+Open Backup Plan
 Click Assign Resources
 
 Select:
 
-EC2 instance
-RDS database
+EC2 Instance
+RDS Database
 
 IAM Role:
 
 AWSBackupDefaultServiceRole
-🔹 3. Create Recovery Point (On-Demand Backup)
-✅ Step-by-Step
 
-1️⃣ Click Create On-Demand Backup
+7️⃣ Create On-Demand Backup
+Go to Backup Vault → project-backup-vault
+Click Create On-Demand Backup
 
-2️⃣ Fill details:
+Fill details:
 
-Field	Value
-Resource Type	EC2 / RDS
-Resource ID	Instance ID / DB
-Backup Vault	project-backup-vault
-IAM Role	AWSBackupDefaultServiceRole
-Retention	7 days
+Resource Type: EC2 / RDS
+Resource ID: Select instance
+Vault: project-backup-vault
+IAM Role: Default
+Retention: 7 days
 
-3️⃣ Click Create Backup
+Click Create Backup
 
-🔹 4. Verify Backup
-✅ Check Backup Jobs
-
-Go to:
-
+8️⃣ Monitor Backup Jobs
+Navigate to:
 AWS Backup → Jobs → Backup Jobs
 
 Status:
 
-Running → Completed
-✅ Check Recovery Points
-
+Running → Completed ✅
+9️⃣ Verify Recovery Points
 Go to:
-
 AWS Backup → Vaults → project-backup-vault
 
 You will see:
 
 EC2 Recovery Point
 RDS Recovery Point
-📸 Screenshots Required
-
-Include:
-
-🖥️ Infrastructure
-EC2 running
-RDS running
-🔐 Backup Setup
-Backup Plan
-Backup Vault
-📦 Results
-Backup Jobs
-Recovery Points
-📊 Key Configuration Details
+📊 Key Configuration
 Setting	Value
 Backup Vault	project-backup-vault
 Backup Plan	project-backup-plan
@@ -163,44 +123,42 @@ Frequency	Daily
 Retention	7 Days
 Resources	EC2 + RDS
 IAM Role	AWSBackupDefaultServiceRole
-🛠️ Services Used
-Amazon EC2
-Amazon RDS
-AWS Backup
-AWS Management Console
-⚡ Issues Faced & Solutions
-❌ No Recovery Points
+🛠️ Tools & Services Used
+AWS Backup – Backup management
+Amazon EC2 – Virtual server
+Amazon RDS – Database
+IAM – Role management
+⚠️ Issues & Solutions
+❌ Issue 1: No Recovery Points
 
-Reason: No backup triggered
-✔ Solution: Create on-demand backup
+Cause: No backup executed
+✅ Solution: Create on-demand backup
 
-❌ Permission Error
+❌ Issue 2: Permission Error
 
-Reason: Wrong IAM role
-✔ Solution: Use AWSBackupDefaultServiceRole
+Cause: Incorrect IAM role
+✅ Solution: Use AWSBackupDefaultServiceRole
 
-❌ EC2 Not Visible
+❌ Issue 3: Resource Not Visible
 
-Reason: Wrong region selected
-✔ Solution: Switch to correct AWS region
+Cause: Wrong region selected
+✅ Solution: Select correct AWS region
 
+📸 Screenshots Required
+
+Include the following screenshots:
+
+EC2 Instance Running
+RDS Database Running
+Backup Plan
+Backup Jobs Status
+Backup Vault with Recovery Points
 ✅ Conclusion
 
-The project successfully implemented a centralized backup solution using AWS Backup.
+The project successfully demonstrates how to use AWS Backup for centralized data protection.
 
-✔ Automated backups
-✔ Secure storage using vault
-✔ Recovery points created for EC2 and RDS
+Backup vault and plan were created
+EC2 and RDS were protected
+Recovery points were generated
 
-This ensures:
-
-Data protection
-Disaster recovery
-Business continuity
-⭐ Future Improvements
-Enable cross-region backup
-Add monitoring with CloudWatch
-Automate using Terraform
-🙌 Author
-
-Your Name
+This setup ensures data safety, automation, and easy recovery in cloud environments.
