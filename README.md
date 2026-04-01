@@ -147,10 +147,20 @@ Recovery Points stored in Backup Vault
 
 <ul>
   <li>EC2 instance running</li>
+  <img width="940" height="432" alt="image" src="https://github.com/user-attachments/assets/05c022be-a1ec-47b1-939a-7a90297cebc6" />
+
   <li>RDS instance running</li>
+  <img width="940" height="435" alt="image" src="https://github.com/user-attachments/assets/867c15eb-0dd2-473a-8f33-cb6a518609da" />
+
   <li>Backup plan configuration</li>
+  <img width="940" height="462" alt="image" src="https://github.com/user-attachments/assets/cf396a83-b328-4646-a7b5-5c62d3b3c7d7" />
+
   <li>Backup jobs status</li>
+  <img width="940" height="433" alt="image" src="https://github.com/user-attachments/assets/de25c0f1-57e5-4766-add7-26e1cbbb0c3f" />
+
   <li>Recovery points in backup vault</li>
+  <img width="940" height="410" alt="image" src="https://github.com/user-attachments/assets/1ee5c805-f7cc-45f4-b280-be78ef7fc1e9" />
+
 </ul>
 
 <hr>
