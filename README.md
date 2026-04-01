@@ -1,6 +1,6 @@
 <h1 align="center">📦 AWS Backup Plan for EC2 and RDS</h1>
 
-<h3 align="center">Set Up AWS Backup Plan for EC2 and RDS. </h3>
+<h3 align="center">Centralized Backup Strategy using AWS Backup</h3>
 
 <hr>
 
