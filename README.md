@@ -50,19 +50,8 @@ Management has mandated the implementation of a <b>centralized AWS Backup strate
 <h2>🏗️ Architecture</h2>
 
 <pre>
-EC2 Instance Running
-        │
-        │
-RDS Database Running
-        │
-        │
-AWS Backup Plan
-        │
-        │
-Backup Jobs Executed
-        │
-        │
-Recovery Points stored in Backup Vault
+<img width="940" height="625" alt="image" src="https://github.com/user-attachments/assets/3cd6734e-1e7a-4580-87d5-ac9b35a6c9cf" />
+
 </pre>
 
 <hr>
